@@ -19,7 +19,7 @@
 			
 		</view>
 		<!-- 分类 -->
-		<view class="cata-section">
+		<view class="cata-section p-persent5">
 			<view class="com-title">
 				家具家电清洗
 			</view>
@@ -34,7 +34,7 @@
 			
 		</view>
 		<!-- 推荐服务 -->
-		<view class="recom-service">
+		<view class="recom-service p-persent5">
 			<view class="p-header">
 				推荐服务
 			</view>
@@ -126,9 +126,16 @@
 		font-family: Arial, Helvetica, sans-serif;
 		letter-spacing: 2upx;
 	}
+	.p-persent5{
+		padding-left: 5%;
+		padding-right: 5%;
+	}
+	
+	
 	.content{
-		padding: 10upx 5%;
-		width: 90%;
+		// padding-top: 10upx;
+		padding-bottom: 10upx;
+		width: 100%;
 		/* flex-wrap: wrap; */
 	}
 	// 轮播图
@@ -152,13 +159,13 @@
 			.carousel-item{
 				width: 100%;
 				height: 100%;
-				padding: 0 28upx;
+				// padding: 0 28upx;
 				overflow: hidden;
 			}
 			image {
 				width: 100%;
 				height: 100%;
-				border-radius: 10upx;
+				// border-radius: 10upx;
 			}
 		}
 	}

@@ -12,15 +12,29 @@
         }
         ,{
             "path" : "pages/catalog/catalog",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "分类"
+			}
         }
         ,{
             "path" : "pages/personal/personal",
-            "style" : {}
+            "style" : {
+				"app-plus": {"titleNView": false} 
+			}
         }
         ,{
             "path" : "pages/order/order",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "订单",
+				"enablePullDownRefresh": true
+				// "onReachBottomDistance": 50 
+			}
+        }
+        ,{
+            "path" : "pages/login/login",
+            "style" : {
+				"app-plus": {"titleNView": false}
+			}
         }
     ],
 	"globalStyle": {

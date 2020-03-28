@@ -16,7 +16,11 @@
         }
         ,{
             "path" : "pages/personal/personal",
-            "style" : {}
+            "style" : {
+				"app-plus":{
+				"titleNView": false
+				}
+			}
         }
         ,{
             "path" : "pages/order/order",

@@ -4,14 +4,6 @@ import App from './App'
 import httpApi from './common/httpApi.js'
 
 
-// const json = type => {
-// 	//模拟异步请求数据
-// 	return new Promise( resolve => {
-// 		setTimeout( () => {
-// 			resolve(Json[type])
-// 		},500)
-// 	})
-// }
 
 Vue.prototype.$api = httpApi;
 

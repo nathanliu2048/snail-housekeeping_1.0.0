@@ -39,23 +39,7 @@ const catalogList = [{
 	{
 		image:'/static/temp/c7.png',
 		text:'洗衣机清洗'
-	},
-	{
-		image:'/static/temp/c8.png',
-		text:'油烟机清洗'
-	},
-	{
-		image:'/static/temp/c3.png',
-		text:'空调清洗'
-	},
-	{
-		image:'/static/temp/c6.png',
-		text:'油烟机清洗'
-	},
-	{
-		image:'/static/temp/c5.png',
-		text:'新居开荒'
-	},
+	}
 	
 ]
 /* 商品列表 */

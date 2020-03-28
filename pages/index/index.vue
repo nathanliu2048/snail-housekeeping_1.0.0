@@ -29,10 +29,50 @@
 					<text>{{ item.text }}</text>
 				</view>
 			</view>
-			
-		
-			
 		</view>
+		<!-- 广告位 -->
+		<view class="ad-section1">
+			<image src="/static/temp/ad1.jpg"></image>
+			<!-- <image src="/static/temp/ad1.jpg" mode="scaleToFill"></image> -->
+		</view>
+		
+		<!-- 秒杀 -->
+		<view class="flashsale-section">
+			<view class="tit-wrap">
+				<view class="tit">
+					<text class="tit-txt">限时秒杀</text>
+					<text class="tit-remainder">本场结束剩余</text>
+				</view>
+				<view class="sub-tit">
+					<view class="next-time">
+						下一场 18:00 开始
+					</view>
+					<view class="time">
+						<text class="hour">00</text>:
+						<text class="minu">00</text>:
+						<text class="secon">00</text>
+					</view>
+				</view>
+			</view>
+
+			<view class="content">
+				<view class="cell" v-for="(item, index) in goodsList" :key="index">
+					<view class="old-price">
+						¥{{ item.price }}
+					</view>
+					<view class="pic">
+						<image :src="item.image" mode=""></image>
+					</view>
+					<view class="price">
+						秒杀价<text class="currency">¥</text><text>{{ item.price }}</text>
+					</view>
+					<view class="tit">
+						{{ item.title }}
+					</view>
+				</view>
+			</view>
+		</view>
+		
 		<!-- 推荐服务 -->
 		<view class="recom-service p-persent5">
 			<view class="p-header">
@@ -118,6 +158,10 @@
 
 <style lang="scss">
 	// 公共
+	%title{
+		font-size: 32upx;
+		color: #333;
+	}
 	.com-title{
 		font-size: 38upx;
 		font-weight: 700;
@@ -179,7 +223,8 @@
 			display: flex;
 			justify-content: space-between;
 			flex-wrap: wrap;
-			min-height:380upx;
+			// min-height:380upx;
+			min-height: 180upx;
 			.cata-item{
 				display: flex;
 				flex-direction: column;
@@ -195,10 +240,125 @@
 		}
 	}
 	
+	// ad
+	.ad-section1{
+		width: 100%;
+		height: 210upx;
+		padding: 10upx 0;
+		background: #fff;
+		image{
+			width:100%;
+			height: 100%; 
+		}
+	}
+	
+	/* 秒杀 */
+	 .flashsale-section{
+		 margin-top: 20upx;
+		 padding: 0 40upx;
+		 .tit-wrap{
+			 display: flex;
+			 flex-direction: column;
+			 // align-items: center;
+			 .tit{
+				 display: flex;
+				 justify-content: space-between;
+				 align-items: center;
+				 .tit-txt{
+					 @extend %title;
+				 }
+				 .tit-remainder{
+					 display: inline-block;
+					 width:200upx;
+					 text-align: center;
+					 color: #999;
+					 font-size:26upx;
+				 }
+			 }
+			 .sub-tit{
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				.next-time{
+					 font-size: 26upx;
+					 color: #999;
+				 }
+				.time{
+					text{
+							 display: inline-block;
+							 width:60upx;
+							 height:40upx;
+							 line-height: 40upx;
+							 font-size: 24upx;
+							 text-align: center;
+							 background: #3F536E;
+							 color: #fff;
+							 border-radius: 10upx;
+							 margin-right: 6upx;
+									 
+					 }
+				.minu,.secon{
+					margin-left:4upx;
+					}
+				} 
+			 }
+		 }
+		 
+		 .content{
+			 display: flex;
+			 flex-wrap: wrap;
+			 justify-content: space-around;
+			 padding: 0 20upx;
+			 margin-top: 60upx;
+			 
+			 .cell{
+				 flex-basis: 40%;
+				 display: flex;
+				 flex-direction: column;
+				 align-items: center;
+				 position: relative;
+				 margin-right: 20upx;
+				 margin-bottom: 40upx;
+				 view{
+					 line-height: 1.6; 
+				 }
+				 image{
+					 width: 160upx;
+					 height: 160upx;
+				 }
+				 .old-price{
+					 position: absolute;
+					 right: 0upx;
+					 top: -35upx;
+					 z-index:2;
+					 width: 74upx;
+					 height: 70upx;
+					 padding: 0 4upx;
+					 font-size: 24upx;
+					 line-height: 70upx;
+					 color: #fff;
+					 border-radius: 50%;
+					 background-color: #f04844;
+					 text-align: center;
+					 text-decoration: line-through;
+				 }
+				 .price{ 
+					 color: #f04844;
+					 .currency{
+						 margin-left: 10upx;
+					 }
+				 }
+				 .tit{
+					 font-size: 26upx;
+					 color: #333;
+				 }
+			 }
+		 }
+	 }
 	
 	/* 推荐服务 */
 	.recom-service .p-header{
-		font-size: 40rpx;
+		@extend %title;
 	}
 	.uni-media-list{
 		padding:22upx 0;
@@ -227,19 +387,20 @@
 		align-items: center;
 	}
 	.list-goods-title{
-		font-size: 36upx;
+		font-size: 32upx;
 		
 	}
 	.list-goods-desc{
 		line-height:34upx;
+		font-size: 24upx;
 	}
 	.list-goods-pri{
 		color:#f50;
 		font-family: Arial, Helvetica, sans-serif;
 	}
 	.list-goods-pri-txt{
-		font-weight: 700;
-		font-size: 44rpx;
+		// font-weight: 700;
+		font-size: 40rpx;
 		margin-right:4upx;
 	}
 

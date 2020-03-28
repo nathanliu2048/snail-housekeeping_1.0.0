@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 	<view>
 		<view class="user-container">
 			<image class="bg" src="/static/user-bg.jpg"></image>
@@ -75,6 +76,12 @@
 					<list-cell icon="icon-setting" iconColor="#e07472" title="设置" border="" @eventClick="navTo('/pages/set/set')"></list-cell>
 				</view>
 			</view>
+=======
+	<view class="container">
+		<!--header-->
+		<view class="box-header">
+			<image class="bg"  src="../../static/user-bg.jpg" ></image>
+>>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 		</view>
 	</view>
 </template>
@@ -141,6 +148,7 @@
 </script>
 
 <style lang="scss">
+<<<<<<< HEAD
 	%flex-center {
 	 display:flex;
 	 flex-direction: column;
@@ -294,5 +302,25 @@
 			border-radius: 5px;
 		}
 	}
+=======
+>>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 
+	.container{
+		.box-header{
+			height: 520upx;
+			padding: 100upx 30upx 0;
+			position:relative;
+			.bg{
+				position:absolute;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				filter: blur(1px);
+				opacity: .7;
+			}
+		}
+		
+	}
+	
 </style>

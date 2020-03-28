@@ -13,6 +13,7 @@
 </script>
 
 <style lang="scss">
+<<<<<<< HEAD
 	/*每个页面公共css */
 	@import "./common/uni.css";
 	/* page,view{
@@ -134,6 +135,12 @@
 		}
 	}
 	
+=======
+	/*
+		全局公共样式和字体图标
+	*/
+
+>>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 	.clamp {
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -141,10 +148,13 @@
 		display: block;
 	}
 	
+<<<<<<< HEAD
 	.common-hover {
 		background: #f5f5f5;
 	}
 	
+=======
+>>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 	/*边框*/
 	.b-b:after,
 	.b-t:after {
@@ -157,15 +167,22 @@
 		transform: scaleY(.5);
 		border-bottom: 1px solid $border-color-base;
 	}
+<<<<<<< HEAD
 	
 	.b-b:after {
 		bottom: 0;
 	}
 	
+=======
+	.b-b:after {
+		bottom: 0;
+	}
+>>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 	.b-t:after {
 		top: 0;
 	}
 	
+<<<<<<< HEAD
 	/* button样式改写 */
 	uni-button,
 	button {
@@ -193,4 +210,6 @@
 	.placeholder {
 		color: #999999;
 	}
+=======
+>>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 </style>

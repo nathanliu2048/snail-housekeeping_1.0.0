@@ -1,28 +1,4 @@
 <template>
-<<<<<<< HEAD
-	<view class="uni-load-more">
-		<view class="uni-load-more__img" v-show="status === 'loading' && showIcon">
-			<view class="load1">
-				<view :style="{background:color}"></view>
-				<view :style="{background:color}"></view>
-				<view :style="{background:color}"></view>
-				<view :style="{background:color}"></view>
-			</view>
-			<view class="load2">
-				<view :style="{background:color}"></view>
-				<view :style="{background:color}"></view>
-				<view :style="{background:color}"></view>
-				<view :style="{background:color}"></view>
-			</view>
-			<view class="load3">
-				<view :style="{background:color}"></view>
-				<view :style="{background:color}"></view>
-				<view :style="{background:color}"></view>
-				<view :style="{background:color}"></view>
-			</view>
-		</view>
-		<text class="uni-load-more__text" :style="{color:color}">{{status === 'more' ? contentText.contentdown : (status === 'loading' ? contentText.contentrefresh : contentText.contentnomore)}}</text>
-=======
 	<view class="uni-load-more" @click="onClick">
 		<!-- #ifdef APP-NVUE -->
 		<loading-indicator v-if="!webviewHide && status === 'loading' && showIcon" :style="{color: color,width:iconSize+'px',height:iconSize+'px'}" :animating="true" class="uni-load-more__img uni-load-more__img--nvue"></loading-indicator>
@@ -48,18 +24,10 @@
 		</view>
 		<!-- #endif -->
 		<text class="uni-load-more__text" :style="{color: color}">{{ status === 'more' ? contentText.contentdown : status === 'loading' ? contentText.contentrefresh : contentText.contentnomore }}</text>
->>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 	</view>
 </template>
 
 <script>
-<<<<<<< HEAD
-	export default {
-		name: "uni-load-more",
-		props: {
-			status: {
-				//上拉的状态：more-loading前；loading-loading中；noMore-没有更多了
-=======
 	const platform = uni.getSystemInfoSync().platform
 
 	/**
@@ -85,7 +53,6 @@
 		props: {
 			status: {
 				// 上拉的状态：more-loading前；loading-loading中；noMore-没有更多了
->>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 				type: String,
 				default: 'more'
 			},
@@ -93,11 +60,6 @@
 				type: Boolean,
 				default: true
 			},
-<<<<<<< HEAD
-			color: {
-				type: String,
-				default: "#777777"
-=======
 			iconType: {
 				type: String,
 				default: 'auto'
@@ -109,30 +71,19 @@
 			color: {
 				type: String,
 				default: '#777777'
->>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 			},
 			contentText: {
 				type: Object,
 				default () {
 					return {
-<<<<<<< HEAD
-						contentdown: "上拉显示更多",
-						contentrefresh: "正在加载...",
-						contentnomore: "没有更多数据了"
-					};
-=======
 						contentdown: '上拉显示更多',
 						contentrefresh: '正在加载...',
 						contentnomore: '没有更多数据了'
 					}
->>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 				}
 			}
 		},
 		data() {
-<<<<<<< HEAD
-			return {}
-=======
 			return {
                 webviewHide: false,
 				platform: platform
@@ -167,147 +118,10 @@
 					}
 				})
 			}
->>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 		}
 	}
 </script>
 
-<<<<<<< HEAD
-<style>
-	@charset "UTF-8";
-
-	.uni-load-more {
-		display: flex;
-		flex-direction: row;
-		height: 80upx;
-		align-items: center;
-		justify-content: center
-	}
-
-	.uni-load-more__text {
-		font-size: 28upx;
-		color: #999
-	}
-
-	.uni-load-more__img {
-		height: 24px;
-		width: 24px;
-		margin-right: 10px
-	}
-
-	.uni-load-more__img>view {
-		position: absolute
-	}
-
-	.uni-load-more__img>view view {
-		width: 6px;
-		height: 2px;
-		border-top-left-radius: 1px;
-		border-bottom-left-radius: 1px;
-		background: #999;
-		position: absolute;
-		opacity: .2;
-		transform-origin: 50%;
-		animation: load 1.56s ease infinite
-	}
-
-	.uni-load-more__img>view view:nth-child(1) {
-		transform: rotate(90deg);
-		top: 2px;
-		left: 9px
-	}
-
-	.uni-load-more__img>view view:nth-child(2) {
-		transform: rotate(180deg);
-		top: 11px;
-		right: 0
-	}
-
-	.uni-load-more__img>view view:nth-child(3) {
-		transform: rotate(270deg);
-		bottom: 2px;
-		left: 9px
-	}
-
-	.uni-load-more__img>view view:nth-child(4) {
-		top: 11px;
-		left: 0
-	}
-
-	.load1,
-	.load2,
-	.load3 {
-		height: 24px;
-		width: 24px
-	}
-
-	.load2 {
-		transform: rotate(30deg)
-	}
-
-	.load3 {
-		transform: rotate(60deg)
-	}
-
-	.load1 view:nth-child(1) {
-		animation-delay: 0s
-	}
-
-	.load2 view:nth-child(1) {
-		animation-delay: .13s
-	}
-
-	.load3 view:nth-child(1) {
-		animation-delay: .26s
-	}
-
-	.load1 view:nth-child(2) {
-		animation-delay: .39s
-	}
-
-	.load2 view:nth-child(2) {
-		animation-delay: .52s
-	}
-
-	.load3 view:nth-child(2) {
-		animation-delay: .65s
-	}
-
-	.load1 view:nth-child(3) {
-		animation-delay: .78s
-	}
-
-	.load2 view:nth-child(3) {
-		animation-delay: .91s
-	}
-
-	.load3 view:nth-child(3) {
-		animation-delay: 1.04s
-	}
-
-	.load1 view:nth-child(4) {
-		animation-delay: 1.17s
-	}
-
-	.load2 view:nth-child(4) {
-		animation-delay: 1.3s
-	}
-
-	.load3 view:nth-child(4) {
-		animation-delay: 1.43s
-	}
-
-	@-webkit-keyframes load {
-		0% {
-			opacity: 1
-		}
-
-		100% {
-			opacity: .2
-		}
-	}
-</style>
-=======
 <style lang="scss" scoped>
 	@import '@/uni.scss';
 
@@ -545,4 +359,3 @@
 	}
 	/* #endif */
 </style>
->>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296

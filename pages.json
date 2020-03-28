@@ -19,13 +19,9 @@
         ,{
             "path" : "pages/personal/personal",
             "style" : {
-<<<<<<< HEAD
 				"app-plus":{
 				"titleNView": false
 				}
-=======
-				"app-plus": {"titleNView": false} 
->>>>>>> 93b4fc7c92e15afc8fa7febd986b04e923efb296
 			}
         }
         ,{

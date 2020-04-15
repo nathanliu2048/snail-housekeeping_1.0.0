@@ -46,7 +46,7 @@
 		 					<button class="action-btn pay" v-show="item.state === 1">立即支付</button>
 		 					<button class="action-btn rec" v-show="item.state === 3">立即评价</button>
 		 					<button class="action-btn post-sale-rec" v-show="item.state === 4">售后评价</button>
-		 					<button class="action-btn post-sale-det" v-show="item.state === 4" @click="login">查看详情</button>
+		 					<button class="action-btn post-sale-det" v-show="item.state === 4" >查看详情</button>
 		 					<button class="action-btn del" v-show="item.state === 5">删除订单</button>
 		 				</view>
 		 			</view>
@@ -114,6 +114,8 @@
 		onLoad(options) {
 			_self = this;
 			console.log("options",options);
+			this.tabCurrentIndex = +options.state;
+			
 			this.loadData();
 		},
 		onPullDownRefresh() {
@@ -249,14 +251,6 @@
 				}
 				return {stateTip, stateTipColor};
 			},
-			login(){
-				uni.navigateTo({
-					url:'../login/login',
-					success() {
-						
-					}
-				})
-			}
 		}
 	}
 </script>

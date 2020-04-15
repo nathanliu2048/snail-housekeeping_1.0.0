@@ -5,13 +5,13 @@
 			<!-- 标题栏和状态栏占位符 -->
 			<view class="header-placing"></view>
 			<!-- 背景色区域 -->
-			<!-- <view class="header-background" :style="{backgroundColor:headerBackground}"> -->
-			<!-- </view> -->
+			<view class="header-background" :style="{backgroundColor:headerBackground}">
+			</view>
 			<!-- 轮播图 -->
 			<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" 
 			class="carousel" circular>
 				<swiper-item v-for="(pic,index) in carouselList" :key="index"
-				class="carousel-item">
+				class="carousel-item" @click="navToDetailPage(pic)">
 					<image :src="pic.src" mode=""></image>
 				</swiper-item>
 				
@@ -21,18 +21,18 @@
 		<!-- 分类 -->
 		<view class="cata-section p-persent5">
 			<view class="com-title">
-				家具家电清洗
+				清洗消杀养护
 			</view>
 			<view class="cata-section-content">
-				<view class="cata-item" v-for="(item,index) in catalogList" :key="index">
+				<view class="cata-item" v-for="(item,index) in catalogList" :key="index"  @click="navToDetailPage(item)">
 					<image :src="item.image"></image>
 					<text>{{ item.text }}</text>
 				</view>
 			</view>
 		</view>
 		<!-- 广告位 -->
-		<view class="ad-section1">
-			<image src="/static/temp/ad1.jpg"></image>
+		<view class="ad-section1" @click="navToDetailPage({id:'ad01'})">
+			<image src="/static/temp/ad1.png" ></image>
 			<!-- <image src="/static/temp/ad1.jpg" mode="scaleToFill"></image> -->
 		</view>
 		
@@ -56,7 +56,7 @@
 			</view>
 
 			<view class="content">
-				<view class="cell" v-for="(item, index) in goodsList" :key="index">
+				<view class="cell" v-for="(item, index) in goodsList" :key="index"  @click="navToDetailPage(item)">
 					<view class="old-price">
 						¥{{ item.price }}
 					</view>
@@ -80,7 +80,7 @@
 			</view>
 			<view class="uni-list">
 				<view class="uni-list-cell"  v-for="(item,index) in goodsList" 
-				:key="index" @tap="openinfo" :data-newsid="item.post_id">
+				:key="index" :data-newsid="item.post_id"  @click="navToDetailPage(item)">
 					<view class="uni-media-list">
 						<image class="uni-media-list-logo" :src="item.image"></image>
 						<view class="uni-media-list-body">
@@ -120,27 +120,28 @@
 			}
 		},
 		onLoad() {
-			// uni.request({
-			// 	url: 'https://unidemo.dcloud.net.cn/api/news',
-			// 	method: 'GET',
-			// 	data:{},
-			// 	success: res => {
-			// 		console.log(res);
-			// 		this.news = res.data;
-			// 	},
-			// 	fail: () => {
-					
-			// 	}
-			// })
 			this.loadData();
 		},
-		methods: {
-			openinfo(e){
-				let newsid = e.currentTarget.dataset.newsid;
+		onNavigationBarButtonTap(e){
+			// console.log(e);
+			if(e.index === 1){
 				uni.navigateTo({
-					url:`../info/info?newsid=${newsid}`
+					url:`/pages/notice/notice`
 				})
-			},
+			}else if(e.index === 0){
+				uni.showToast({
+					title: "点击扫一扫",
+					icon: "none"
+				})
+			}
+		},
+		methods: {
+			// openinfo(e){
+			// 	let newsid = e.currentTarget.dataset.newsid;
+			// 	uni.navigateTo({
+			// 		url:`../info/info?newsid=${newsid}`
+			// 	})
+			// },
 			async loadData(){
 				let carouselList = await this.$api.json('carouselList');
 				this.carouselList = carouselList;
@@ -151,6 +152,12 @@
 				this.catalogList = catalogList;
 				let goodsList = await this.$api.json('goodsList');
 				this.goodsList = goodsList || [];
+			},
+			navToDetailPage(item){
+				let id = item.id;
+				uni.navigateTo({
+					url: `/pages/product/product?id=${id}`
+				})
 			}
 		}
 	}
@@ -161,6 +168,7 @@
 	%title{
 		font-size: 32upx;
 		color: #333;
+		font-weight: 700;
 	}
 	.com-title{
 		font-size: 38upx;
@@ -186,7 +194,9 @@
 	.carousel-section{
 		.header-placing{
 			height: 0;
-			padding-top: 0;
+			padding-top: 88upx;
+			box-sizing: content-box;
+			// background-color: rgb(203, 87, 60);249, 109, 77
 		}
 		
 		.header-background{
@@ -200,16 +210,17 @@
 		.carousel{
 			width: 100%;
 			height: 350upx;
+			padding-top: 20upx;
 			.carousel-item{
 				width: 100%;
 				height: 100%;
-				// padding: 0 28upx;
+				padding: 0 28upx;
 				overflow: hidden;
 			}
 			image {
 				width: 100%;
 				height: 100%;
-				// border-radius: 10upx;
+				border-radius: 10upx;
 			}
 		}
 	}

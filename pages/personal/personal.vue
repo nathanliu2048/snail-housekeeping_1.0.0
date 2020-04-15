@@ -1,13 +1,14 @@
 <template>
 	<view>
 		<view class="user-container">
-			<image class="bg" src="/static/user-bg.jpg"></image>
+			<image class="bg" src="/static/temp/user-bg02.png"></image>
 			<view class="user-info-section">
 				<view class="avatar-box">
-					<image src='/static/missing-face.png' mode="" class="avatar"></image>
+					<image :src="userInfo.avatar || '/static/missing-face.png'"  mode="" class="avatar"></image>
 				</view>
 				<view class="username-box">
-					<text class="username">ltx</text>
+					<!-- <text class="default" @click="login">登录/注册</text> -->
+					<text class="username" @click="login">{{ userInfo.nickname || '游客'}}</text>
 				</view>
 			</view>
 			<view class="vip-card-section">
@@ -17,10 +18,10 @@
 				</view>
 				<view class="tit">
 					<text class="iconfont icon-vip1"></text>
-					DCloud会员
+					白金VIP
 				</view>
-				<text class="union-name">DCloud Union</text>
-				<text class="desc">开通会员开发无bug 一测就上线</text>
+				<text class="union-name">SnailShell</text>
+				<text class="desc">积分加倍 专享价 会员日 更多福利</text>
 			</view>
 		</view>
 		<view :style="{transition:coverTransition,transform:coverTransform}"
@@ -46,23 +47,28 @@
 			<view class="order-section">
 				<view class="list-item">
 					<text class="iconfont icon-order"></text>
-					<text class="item-txt">订单</text>
+					<text class="item-txt" 
+					@click="navTo('../order/order?state=0')">全部订单</text>
 				</view>
 				<view class="list-item">
 					<text class="iconfont icon-unpaided"></text>
-					<text class="item-txt">待付款</text>
+					<text class="item-txt"
+					@click="navTo('../order/order?state=1')">待付款</text>
 				</view>
 				<view class="list-item">
 					<text class="iconfont icon-unserviced"></text>
-					<text class="item-txt">待服务</text>
+					<text class="item-txt"
+					@click="navTo('../order/order?state=2')">待服务</text>
 				</view>
 				<view class="list-item">
 					<text class="iconfont icon-unevaluated"></text>
-					<text class="item-txt">待评价</text>
+					<text class="item-txt"
+					@click="navTo('../order/order?state=3')">待评价</text>
 				</view>
 				<view class="list-item">
 					<text class="iconfont icon-postsale"></text>
-					<text class="item-txt">售后</text>
+					<text class="item-txt"
+					@click="navTo('../order/order?state=4')">售后</text>
 				</view>
 			</view>
 			<view class="extra-section">
@@ -72,7 +78,7 @@
 					<list-cell icon="icon-share" iconColor="#9789f7" title="分享" tips="邀请好友赢10万大礼"></list-cell>
 					<list-cell icon="icon-member" iconColor="#ee883b" title="会员" tips="您的会员还有3天过期"></list-cell>
 					<list-cell icon="icon-service" iconColor="#54b4ef" title="客服中心"></list-cell>
-					<list-cell icon="icon-setting" iconColor="#e07472" title="设置" border="" @eventClick="navTo('/pages/set/set')"></list-cell>
+					<list-cell icon="icon-setting" iconColor="#e07472" title="设置" border="" @eventClick="navTo('/pages/setting/setting')"></list-cell>
 				</view>
 			</view>
 		</view>
@@ -80,7 +86,10 @@
 </template>
 
 <script>
-	import listCell from '@/components/mix-list-cell'
+	import listCell from '@/components/mix-list-cell';
+	import {
+	    mapState 
+	} from 'vuex'; 
 	let startY = 0, moveY = 0, pageAtTop = true;
 	export default {
 		data() {
@@ -88,12 +97,85 @@
 				coverTransform: 'translateY(0px)',
 				coverTransition: '0s',
 				moving: false,
+				
+			}
+		},
+		onLoad(){
+			console.log("onload",this.userInfo)
+			
+		}, 
+		// #ifndef MP
+		onNavigationBarButtonTap(e) {
+			console.log("你点了",e)
+			const index = e.index;
+			if (index === 0) {
+				this.navTo('/pages/setting/setting');
+			}else if(index === 1){
+				// #ifdef APP-PLUS
+				// const pages = getCurrentPages();
+				// const page = pages[pages.length - 1]; // 最后一个为当前页
+				// console.log("page",page)
+				// const currentWebview = page.$getAppWebview();
+				// currentWebview.hideTitleNViewButtonRedDot({
+				// 	index
+				// });
+				// #endif
+				uni.navigateTo({
+					url: '/pages/notice/notice'
+				})
 			}
 		},
 		components:{
 			listCell
 		},
+		computed: {
+			...mapState(['hasLogin','userInfo']),
+			// 以上相当于以下，映射处理
+			// userInfo(){
+			// 	return this.$store.state.userInfo;
+			// },
+			// hasLogin(){
+			// 	return this.$store.state.hasLogin;
+			// }
+		},
 		methods: {
+			// test(){
+			// 	console.log("test",this.$store.state.userInfo)
+			// 	console.log("test2",this.userInfo.avatar)
+			// 	console.log("teste3",this.hasLogin)
+			// },
+			/**
+			 * 统一跳转接口,拦截未登录路由
+			 * 
+			 */
+			navTo(url){
+				console.log("this.userInfo",this.userInfo)
+				if(!this.hasLogin){
+					url =  '/pages/login/login'
+				}
+				uni.navigateTo({
+					url
+				})
+				
+			},
+			swiTab(url){
+				uni.switchTab({
+					url
+				})
+			},
+			login(){
+				if(!this.hasLogin){
+					this.navTo('../login/login');
+				}
+				
+				// uni.login({
+				//   provider: 'weixin',
+				//   scopes: 'auth_user',
+				//   success: function (loginRes) {
+				//     console.log(loginRes.authResult);
+				//   }
+				// });
+			},
 			/**
 			 *  会员卡下拉和回弹
 			 *  1.关闭bounce避免ios端下拉冲突
@@ -107,14 +189,14 @@
 				}
 				this.coverTransition = 'transform .1s linear';
 				startY = e.touches[0].clientY;
-				console.log("s-----",startY)
+				// console.log("s-----",startY)
 			},
 			coverTouchmove(e){
 				moveY = e.touches[0].clientY;
 				let moveDistance = moveY - startY;
-				console.log("distance******************",moveDistance)
-				console.log("startY",startY);
-				console.log("moveY",moveY);
+				// console.log("distance******************",moveDistance)
+				// console.log("startY",startY);
+				// console.log("moveY",moveY);
 				if(moveDistance < 0){
 					this.moving = false;
 					return;
@@ -175,7 +257,8 @@
 			align-items: center;
 			.username-box{
 				margin-left: 10upx;
-				.username{
+				.username,
+				.default{
 					font-size: 40upx;
 				}
 			}
@@ -192,7 +275,7 @@
 			position: relative;
 			display: flex;
 			flex-direction: column;
-			padding: 20upx 24upx;
+			padding: 10upx 24upx;
 			background: linear-gradient(left, rgba(0,0,0,.7), rgba(0,0,0,.8));
 			color:#f7d680;
 			border-radius: 16upx 16upx 0 0;
@@ -282,7 +365,7 @@
 					display: inline-block;
 					height: 76upx;
 					// margin-bottom: 18upx;
-					color: #fa436a;
+					color: $base-color;
 				}
 			}
 		}

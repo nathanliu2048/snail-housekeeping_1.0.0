@@ -1,19 +1,17 @@
 <template>
 	<view class="content">
-		<scroll-view scroll-y="true" class="left-aside">
-			<view v-for="(item) in fList" :key='item.id' class="f-item b-b" 
-			:class="{active: item.id === currentId}"
-			@click="clickTab(item)">
-				{{ item.name }}
+		<scroll-view scroll-y class="left-aside">
+			<view v-for="item in fList" :key="item.id" class="f-item b-b" :class="{active: item.id === currentId}" @click="tabtap(item)">
+				{{item.name}}
 			</view>
 		</scroll-view>
-		<scroll-view scroll-y="true" class="right-aside" :scroll-top="tabScrollTop">
-			<view v-for="(item) in sList" :key="item.id" class="s-list" :id="'main'+item.id">
-				<text class="s-item">{{ item.name }}</text>
+		<scroll-view scroll-with-animation scroll-y class="right-aside" @scroll="asideScroll" :scroll-top="tabScrollTop">
+			<view v-for="item in sList" :key="item.id" class="s-list" :id="'main-'+item.id">
+				<text class="s-item">{{item.name}}</text>
 				<view class="t-list">
-					<view class="t-item" v-for="(titem) in tList" :key="titem.id" v-show="titem.pid === item.id">
-						<image :src="titem.picture" mode=""></image>
-						<text class="">{{ titem.name }}</text>
+					<view @click="navToPro(item)" v-if="titem.pid === item.id" class="t-item" v-for="titem in tList" :key="titem.id">
+						<image :src="titem.picture"></image>
+						<text>{{titem.name}}</text>
 					</view>
 				</view>
 			</view>
@@ -40,39 +38,61 @@
 		methods: {
 			async loadData(){
 				let list = await this.$api.json('cateList');
-				list.forEach( item => {
-					if(!item.pid){ //没有pid为一级目录
-						this.fList.push(item);
+				console.log(list)
+				list.forEach(item=>{
+					if(!item.pid){
+						this.fList.push(item);  //pid为父级id, 没有pid或者pid=0是一级分类
 					}else if(!item.picture){
-						this.sList.push(item);
+						this.sList.push(item); //没有图的是2级分类
 					}else{
-						this.tList.push(item);
+						this.tList.push(item); //3级分类
 					}
-				})
+				}) 
+				console.log("flist",this.fList);
+				console.log("slist",this.sList);
+				console.log("tlist",this.tList);
 			},
-			clickTab(item){
+			asideScroll(e){
+				if(!this.sizeCalcState){
+					this.calcSize();
+				}
+				let scrollTop = e.detail.scrollTop;
+				let tabs = this.sList.filter(item=>item.top <= scrollTop).reverse();
+				if(tabs.length > 0){
+					this.currentId = tabs[0].pid;
+				}
+			},
+			tabtap(item){
 				if(!this.sizeCalcState){
 					this.calcSize();
 				}
 				this.currentId = item.id;
 				let index = this.sList.findIndex( sitem => {
-					sitem.pid === item.id;
+					return sitem.pid === item.id;
 				})
 				this.tabScrollTop = this.sList[index].top;
 			},
 			//计算右侧栏每个tab的高度等信息
 			calcSize(){
 				let h = 0;
-				this.sList.forEach( item => {
-					let view = uni.createSelectorQuery().select('#main-' + item.id);
+				console.log(this.sList)
+				this.sList.forEach(item=>{
+					let view = uni.createSelectorQuery().select("#main-" + item.id);
 					view.fields({
 						size: true
 					}, data => {
+						console.log(data)
 						item.top = h;
 						h += data.height;
 						item.bottom = h;
 					}).exec();
-					this.sizeCalcState = true;
+				})
+				this.sizeCalcState = true;
+			},
+			navToPro(item){
+				let id = item.id ;
+				uni.navigateTo({
+					url: `/pages/product/product?id=${id}`
 				})
 			}
 		}

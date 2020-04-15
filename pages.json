@@ -3,12 +3,47 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText":"首页",
+				"navigationBarTextStyle": "black",
+				"app-plus":{
+					"titleNView":{
+						"type": "transparent",
+						// "titleText": "蜗牛家政",
+						"searchInput":{
+							"backgroundColor": "rgba(231, 231, 231, .7)",
+							"borderRadius":"16px",
+							"placeholder":"请输入关键字 如：保洁 ",
+							// "disabled": true,
+							"placeholderColor": "#606266",
+							"autoFocus": true
+						},
+						"buttons":[
+							{
+								"fontSrc": "/static/yticon.ttf",
+								"text": "\ue60d",
+								"fontSize": "26",
+								"color": "#303133",
+								"float": "left",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"fontSrc":"/static/yticon.ttf",
+								"text": "\ue744",
+								"color": "#303133",
+								"fontSize": "28",
+								"background": "rgba(0,0,0,0)",
+								"redDot": true
+							}
+						]
+					}
+				}
 			}
 		}
 	    ,{
             "path" : "pages/info/info",
-            "style" : {}
+            "style" : {
+				
+			}
         }
         ,{
             "path" : "pages/catalog/catalog",
@@ -20,7 +55,27 @@
             "path" : "pages/personal/personal",
             "style" : {
 				"app-plus":{
-				"titleNView": false
+				"titleNView": {
+						"titleText": "我的",
+						"type": "transparent",
+						"buttons":[{
+								"fontSrc":"/static/yticon.ttf",
+								"text": "\ue60f",
+								"color": "#303133",
+								"fontSize": "24",
+								"width": "46px",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"fontSrc":"/static/yticon.ttf",
+								"text": "\ue744",
+								"color": "#303133",
+								"fontSize": "28",
+								"background": "rgba(0,0,0,0)",
+								"redDot": true
+							}
+						]
+					}
 				}
 			}
         }
@@ -32,17 +87,74 @@
 				// "onReachBottomDistance": 50 
 			}
         }
+		,{
+		    "path" : "pages/order/createOrder",
+		    "style" : {
+				"navigationBarTitleText": "创建订单",
+				"enablePullDownRefresh": true
+				// "onReachBottomDistance": 50 
+			}
+		}
         ,{
             "path" : "pages/login/login",
             "style" : {
 				"app-plus": {"titleNView": false}
 			}
         }
+        ,{
+            "path" : "pages/register/register",
+            "style" : {
+				"app-plus":{"titleNView": false}
+			}
+        }
+		,{
+		    "path" : "pages/register/regSuccess",
+		    "style" : {
+				"app-plus":{"titleNView": false}
+			}
+		}
+        ,{
+            "path" : "pages/setting/setting",
+            "style" : {}
+        }
+        ,{
+            "path" : "pages/notice/notice",
+            "style" : {
+				"navigationBarTitleText":"通知"
+			}
+        }
+        ,{
+            "path" : "pages/address/address",
+            "style" : {}
+        }
+		,{
+			"path" : "pages/address/addressManage",
+			"style" : {}
+		}
+        ,{
+            "path" : "pages/product/product",
+            "style" : {
+				"navigationBarTitleText":"详情展示",
+				"app-plus":{
+					"titleNView":{
+						"type":"transparent"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/pay/pay",
+            "style" : {}
+        }
+		,{
+		    "path" : "pages/pay/paySuccess",
+		    "style" : {}
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarBackgroundColor": "#FFF",
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
@@ -61,17 +173,27 @@
 	        "selectedIconPath": "static/tab-cate-current.png",
 	        "text": "分类"
 	    },
-		{
-		    "pagePath": "pages/order/order",
-		    "iconPath": "static/tab-home.png",
-		    "selectedIconPath": "static/tab-my-current.png",
-		    "text": "订单"
-		},
+		// {
+		//     "pagePath": "pages/order/order",
+		//     "iconPath": "static/tab-home.png",
+		//     "selectedIconPath": "static/tab-my-current.png",
+		//     "text": "订单"
+		// },
 		{
 		    "pagePath": "pages/personal/personal",
 		    "iconPath": "static/tab-my.png",
 		    "selectedIconPath": "static/tab-my-current.png",
 		    "text": "我的"
 		}]
+	},
+	"condition" : { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [
+			{
+				"name": "", //模式名称
+				"path": "", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			}
+		]
 	}
 }

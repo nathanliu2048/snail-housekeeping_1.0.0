@@ -21,12 +21,12 @@
 	
 	@font-face {
 	  font-family: 'iconfont';  /* project id 1698511 */
-	  src: url('//at.alicdn.com/t/font_1698511_ir5n9n6izdq.eot');
-	  src: url('//at.alicdn.com/t/font_1698511_ir5n9n6izdq.eot?#iefix') format('embedded-opentype'),
-	  url('//at.alicdn.com/t/font_1698511_ir5n9n6izdq.woff2') format('woff2'),
-	  url('//at.alicdn.com/t/font_1698511_ir5n9n6izdq.woff') format('woff'),
-	  url('//at.alicdn.com/t/font_1698511_ir5n9n6izdq.ttf') format('truetype'),
-	  url('//at.alicdn.com/t/font_1698511_ir5n9n6izdq.svg#iconfont') format('svg');
+	  src: url('//at.alicdn.com/t/font_1698511_foou1hgu68u.eot');
+	  src: url('//at.alicdn.com/t/font_1698511_foou1hgu68u.eot?#iefix') format('embedded-opentype'),
+	  url('//at.alicdn.com/t/font_1698511_foou1hgu68u.woff2') format('woff2'),
+	  url('//at.alicdn.com/t/font_1698511_foou1hgu68u.woff') format('woff'),
+	  url('//at.alicdn.com/t/font_1698511_foou1hgu68u.ttf') format('truetype'),
+	  url('//at.alicdn.com/t/font_1698511_foou1hgu68u.svg#iconfont') format('svg');
 	}
 	.iconfont {
 		font-family: "iconfont" !important;
@@ -75,8 +75,48 @@
 	.icon-setting:before{
 		content:'\e613';
 	}
-	
-	
+	.icon-arrow-left:before{
+		content:'\e632';
+	}
+	.icon-arrow-right:before{
+		content: '\e60e';
+	}
+	.icon-edit:before{
+		content: '\e6b0';
+	}
+	.icon-map:before{
+		content: '\e629';
+	}
+	.icon-arrow-down:before{
+		content: '\e648';
+	}
+	.icon-mobile:before{
+		content: '\e791'
+	}
+	.icon-remark:before{
+		content: '\e640'
+	}
+	.icon-coupon:before{
+		content: '\e645'
+	}
+	.icon-sandy-clock:before{
+		content: '\e66f'
+	}
+	.icon-floor-area:before{
+		content: '\e61d'
+	}
+	.icon-wxpay:before {
+		content: "\e600";
+	}
+	.icon-alipay:before {
+	    content: "\e68a";
+	}
+	.icon-balance:before {
+	    content: "\e78a";
+	}
+	.icon-ok:before{
+		content: '\e63c';
+	}
 	/* public */
 	
 	
@@ -174,6 +214,34 @@
 	}
 	
 	/* button样式改写 */
+	.s-pay-btn{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 630upx;
+		height: 84upx;
+		margin: 0 auto 30upx;
+		border-radius: 10upx;
+		box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
+		font-size: $font-lg;
+		color: #fff;
+		background-color: $base-color;
+	}
+	.s-normal-btn{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 630upx;
+		height: 84upx;
+		margin: 0 auto 30upx;
+		border-radius: 10upx;
+		border: 1px solid #ccc;;
+		box-shadow: 1px 2px 5px rgba(255, 255, 255, 0.4);
+		font-size: $font-lg;
+		color: $font-color-dark;
+		background-color: #fff;
+	}
+	
 	uni-button,
 	button {
 		height: 80upx;
@@ -191,6 +259,7 @@
 	button[type=default] {
 		color: $font-color-dark;
 	}
+	
 	
 	/* input 样式 */
 	.input-placeholder {

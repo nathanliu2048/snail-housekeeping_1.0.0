@@ -5,9 +5,9 @@
 			
 		</view>
 		<view class="login-wrap">
-			<view class="left-top-sign">LOGIN</view>
+			<view class="left-top-sign">REGISTER</view>
 			<view class="welcome">
-				欢迎回来！
+				欢迎加入！
 			</view>
 			<view class="input-content">
 				<view class="input-item">
@@ -21,7 +21,7 @@
 				</view>
 				<view class="input-item">
 					<text class="tit">密码</text>
-					<input type="text" value="" placeholder="请输入密码"
+					<input type="text" value="" placeholder="8-18位不含特殊字符的数字、字母组合"
 					@blur="checkPassword"
 					class="password" 
 					ref="password"/>
@@ -29,24 +29,31 @@
 				<view class="tip-item">
 					<text v-show="passwordTips.show">{{ passwordTips.text }}</text>
 				</view>
+				<view class="input-item">
+					<text class="tit">密码</text>
+					<input type="text" value="" placeholder="请再次输入密码"
+					@blur="checkPasswordAgain"
+					ref="passwordAgain"/>
+				</view>
+				<view class="tip-item">
+					<text v-show="passwordAgainTips.show">{{ passwordAgainTips.text }}</text>
+				</view>
 			</view>
 			<view class="btn-area">
-				<button type="default" @click="submitLogin">登录</button>
+				<button @click="submitRegister">注册</button>
 				
 			</view>
 			<view class="forget-section">忘记密码?</view>
 			
 		</view>
 		<view class="register-section">
-			还没有账号?<text @click="navTo('register')">马上注册</text>
+			已有账号?<text @click="navTo('login')">马上登录</text>
 		</view>
 	</view>
 </template>
 
 <script>
 	import baseUrl from '../../common/config.js';
-	import { mapMutations } from 'vuex';
-	import { mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -57,12 +64,14 @@
 				passwordTips:{
 					text: '密码必须是8-18位的大小写字母与数字组合',
 					show: false,
+				},
+				passwordAgainTips:{
+					text: '两次密码输入不一致',
+					show: false
 				}
 			}
 		},
 		methods: {
-			...mapMutations(['SET_DATA']),// 将 `this.SET_DATA()` 映射为 `this.$store.commit('SET_DATA')`
-			...mapActions(['login']), // 将 `this.login()` 映射为 `this.$store.dispatch('login')`
 			navTo(url){
 				uni.navigateTo({
 					url: `../${url}/${url}`
@@ -73,21 +82,46 @@
 			},
 			checkMobile(){
 				// console.log(e.detail.value);
-				let mobile = this.$refs.telephone.inputValue;
-				// let exp = /^1[3456789]\d{9}$/; // 正确的手机号码格式 做测试暂不使用
-				let exp = /\w/;
-				this.phoneTips.show = (!RegExp(exp).test(mobile))?true:false;
-				return RegExp(exp).test(mobile);
+				let data = this.$refs.telephone.inputValue;
+				let exp = /^1[3456789]\d{9}$/;
+				// if(!RegExp(exp).test(data)){
+				// 	this.phoneTips.show = true;
+				// }else{
+				// 	this.phoneTips.show = false;
+				// }
+				this.phoneTips.show = (!RegExp(exp).test(data))?true:false;
+				return RegExp(exp).test(data);
 			},
 			checkPassword(){
-				let password = this.$refs.password.inputValue;
-				// let exp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/; // 8-18位的大小写字母与数字组合
-				let exp = /\w/;
-				this.passwordTips.show = (!RegExp(exp).test(password))?true:false;
-				return RegExp(exp).test(password);
+				let firstP = this.$refs.password.inputValue;
+				let secondP = this.$refs.passwordAgain.inputValue;
+				let exp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/;
+				// let exp =  /^(?![0-9]+$)(?![a-zA-Z]+$)(?!(^[0-9a-zA-z])+$)[0-9A-Za-z]{8}$/
+				// if(!RegExp(exp).test(data)){
+				// 	this.passwordTips.show = true;
+				// }else{
+				// 	this.passwordTips.show = false;
+				// }
+				this.passwordTips.show = (!RegExp(exp).test(firstP))?true:false;
+				if(secondP !== ''){
+					this.checkPasswordAgain();
+				}
+				return RegExp(exp).test(firstP);
 			},
-			async submitLogin(){ 
-				if(!this.checkMobile()|| !this.checkPassword()){
+			checkPasswordAgain(){
+				let firstP = this.$refs.password.inputValue;
+				let secondP = this.$refs.passwordAgain.inputValue;
+				this.passwordAgainTips.show = (firstP !== secondP)?true:false;
+				if(firstP !== secondP){
+					this.passwordAgainTips.show = true;
+					return false;
+				}else{
+					this.passwordAgainTips.show = false;
+					return true;
+				}
+			},
+			async submitRegister(){
+				if(!this.checkMobile() || !this.checkPassword() || !this.checkPasswordAgain()){
 					uni.showToast({
 						title:'信息填写错误，请确认后重新输入',
 						icon:'none'
@@ -96,56 +130,36 @@
 					let _self = this;
 					let phone = this.$refs.telephone.inputValue;
 					let password = this.$refs.password.inputValue;
-					console.log("phone",phone)
-					console.log("password",password)
-					 //uni-app 对部分 API 进行了 Promise 封装，返回数据的第一个参数是错误对象，第二个参数是返回数据。
-					 // var [error, res] = await uni.request({
-					 //        url: 'https://www.example.com/request'
-					 //    });
-					 
-					 let res = await this.login({ phone, password})
-					  console.log("请求后台获取数据成功",res);
-					  // console.log(this.$store.state.userInfo)
-					 	 uni.showToast({
-					 	 	title: res.data.message,
-					 	 	icon: res.data.code == 2000?'success':'none'
-					 	 })
-					 	 setTimeout( () =>{
-					 	 	uni.navigateBack();
-					 	 },2000)
-						 
-					 
-					 
-					// let [err,res] = await this.$api.request({
-					// 	url: `${baseUrl}/user/login`,
-					// 	method: 'POST',
-					// 	data: {
-					// 		phone,
-					// 		password
-					// 	}
-					// }) 
-					// console.log(res)
-					// console.log("请求后台获取数据成功",res)
-					// _self.login(res.data.data); // 存本地 
-					// console.log("this.store.userInfo",_self.$store.state.userInfo.avatar)
-					// console.log("this.store.userInfo.nickname",_self.$store.state.userInfo.nickname)
-					// console.log(typeof _self.$store.state.userInfo)
-					// uni.showToast({
-					// 	title: res.data.message,
-					// 	icon: res.data.code == 2000?'success':'none'
-					// })
-					// setTimeout( () =>{
-						// uni.navigateBack();
-					// },2000)
+					let result = await this.$api.request({
+						url: `${baseUrl}/user/register`,
+						method: 'POST',
+						data: {
+							phone,
+							password
+						}
+					}).then( res => {
+						// uni.showToast({
+						// 	title: res[1].data.message,
+						// 	icon: res[1].data.code == 2000?'success':'none'
+						// })
+						if(res[1].data.code == 2000){
+							// uni.switchTab({
+							// 	url: '/pages/personal/personal'
+							// })
+							uni.navigateTo({
+								url: "/pages/register/regSuccess"
+							})
+						}
+					})
 				}
-			}
+			},
 		}
 	}
 </script>
 
 <style lang="scss">
 	.content{
-		padding-top: 200upx;
+		padding-top: 160upx;
 		position: relative;
 		background-color: #fff;
 		width: 100vw;
@@ -160,7 +174,6 @@
 	}
 	.login-wrap{
 		position: relative;
-		// padding-bottom: 40upx;
 		.left-top-sign{
 			font-size: 120upx;
 			color: #f8f8f8;
@@ -209,7 +222,7 @@
 			}
 		}
 		.btn-area{
-			margin-top: 70upx;
+			margin-top: 10upx;
 			button{
 				width: 630upx;
 				height: 76upx;

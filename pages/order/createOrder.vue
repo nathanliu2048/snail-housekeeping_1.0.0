@@ -49,7 +49,7 @@
 				<view class="scandy-clock input">
 					<text class="tit">服务时长：</text>
 					<text class="decrease" @click="changeClock('decrease')">-</text>
-					<input type="text" :value="serviceClock" class="howlong" v-model="serviceClock"/>
+					<input type="text" class="howlong" v-model="serviceClock"/>
 					<text class="add" @click="changeClock('add')">+</text>
 				</view>
 			</view>
@@ -58,7 +58,7 @@
 				<view class="scandy-clock input">
 					<text class="tit">服务面积(10平方起)：</text>
 					
-					<input type="text" :value="serviceArea" class="input area-input" v-model="serviceArea"/>
+					<input type="text" class="input area-input" v-model="serviceArea"/>
 					<text class="square">平米</text>
 					
 				</view>

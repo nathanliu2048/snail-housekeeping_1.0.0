@@ -51,7 +51,6 @@
 				})
 			},
 			switchChange(e){
-				console.log(e.detail.value)
 				let switchState = e.detail.value? '打开':'关闭'
 				uni.showToast({
 					title: `${switchState}了开关`,
@@ -64,19 +63,14 @@
 					content: '确定要退出登录吗',
 					success(e) {
 						if(e.confirm){
-							console.log('确定')
 							_self.toLogout();
-						}else{
-							console.log('不退出')
 						}
 					}
 				})
 			},
 			async toLogout(){
-				// console.log(this.hasLogin)
 				if(this.hasLogin){
 					let res = await this.logout(this.userInfo.token);
-					// console.log("退出成功",res);
 					 uni.showToast({
 						title: res.data.message,
 						icon: res.data.code == 2000?'success':'none'

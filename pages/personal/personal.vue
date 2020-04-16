@@ -100,13 +100,9 @@
 				
 			}
 		},
-		onLoad(){
-			console.log("onload",this.userInfo)
-			
-		}, 
+		onLoad(){}, 
 		// #ifndef MP
 		onNavigationBarButtonTap(e) {
-			console.log("你点了",e)
 			const index = e.index;
 			if (index === 0) {
 				this.navTo('/pages/setting/setting');
@@ -125,6 +121,7 @@
 				})
 			}
 		},
+		// #endif
 		components:{
 			listCell
 		},
@@ -139,17 +136,11 @@
 			// }
 		},
 		methods: {
-			// test(){
-			// 	console.log("test",this.$store.state.userInfo)
-			// 	console.log("test2",this.userInfo.avatar)
-			// 	console.log("teste3",this.hasLogin)
-			// },
 			/**
 			 * 统一跳转接口,拦截未登录路由
 			 * 
 			 */
 			navTo(url){
-				console.log("this.userInfo",this.userInfo)
 				if(!this.hasLogin){
 					url =  '/pages/login/login'
 				}

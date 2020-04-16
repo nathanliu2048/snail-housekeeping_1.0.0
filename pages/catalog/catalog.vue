@@ -38,7 +38,6 @@
 		methods: {
 			async loadData(){
 				let list = await this.$api.json('cateList');
-				console.log(list)
 				list.forEach(item=>{
 					if(!item.pid){
 						this.fList.push(item);  //pid为父级id, 没有pid或者pid=0是一级分类
@@ -48,9 +47,6 @@
 						this.tList.push(item); //3级分类
 					}
 				}) 
-				console.log("flist",this.fList);
-				console.log("slist",this.sList);
-				console.log("tlist",this.tList);
 			},
 			asideScroll(e){
 				if(!this.sizeCalcState){
@@ -75,13 +71,11 @@
 			//计算右侧栏每个tab的高度等信息
 			calcSize(){
 				let h = 0;
-				console.log(this.sList)
 				this.sList.forEach(item=>{
 					let view = uni.createSelectorQuery().select("#main-" + item.id);
 					view.fields({
 						size: true
 					}, data => {
-						console.log(data)
 						item.top = h;
 						h += data.height;
 						item.bottom = h;

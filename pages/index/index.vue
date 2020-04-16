@@ -122,9 +122,17 @@
 		onLoad() {
 			this.loadData();
 		},
+		// #ifndef MP
 		onNavigationBarButtonTap(e){
-			// console.log(e);
 			if(e.index === 1){
+				// #ifdef APP-PLUS
+				const pages = getCurrentPages();
+				const page = pages[pages.length - 1];
+				const currentWebview = page.$getAppWebview();
+				currentWebview.hideTitleNViewButtonRedDot({
+					index
+				});
+				// #endif
 				uni.navigateTo({
 					url:`/pages/notice/notice`
 				})
@@ -135,6 +143,7 @@
 				})
 			}
 		},
+		// #endif
 		methods: {
 			// openinfo(e){
 			// 	let newsid = e.currentTarget.dataset.newsid;

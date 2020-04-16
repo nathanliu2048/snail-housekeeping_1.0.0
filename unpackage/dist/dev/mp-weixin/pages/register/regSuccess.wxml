@@ -1,0 +1,1 @@
+<view class="content"><text class="iconfont icon-ok"></text><text class="tips">注册成功</text><view class="btn-area"><navigator class="s-pay-btn" url="/pages/login/login" open-type="redirect">使用注册账号登录</navigator><navigator class="s-normal-btn" url="/pages/index/index" open-type="switchTab">返回首页</navigator></view></view>

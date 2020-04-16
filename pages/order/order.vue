@@ -112,11 +112,21 @@
 			}
 		},
 		onLoad(options) {
+			/**
+			 * 修复app端点击除全部订单外的按钮进入时不加载数据的问题
+			 * 
+			 */
 			_self = this;
-			console.log("options",options);
+			// console.log("options",options);
 			this.tabCurrentIndex = +options.state;
-			
-			this.loadData();
+			// #ifndef MP
+			this.loadData()
+			// #endif
+			// #ifdef MP
+			if(options.state == 0){
+				this.loadData()
+			}
+			// #endif
 		},
 		onPullDownRefresh() {
 			this.loadData();

@@ -12,8 +12,7 @@
 			<view class="input-content">
 				<view class="input-item">
 					<text class="tit">手机号码</text>
-					<input type="number" value="" placeholder="请输入手机号码" 
-					ref="telephone"
+					<input value="" placeholder="请输入手机号码" 
 					@blur="checkMobile"/>
 				</view>
 				<view class="tip-item" >
@@ -57,7 +56,9 @@
 				passwordTips:{
 					text: '密码必须是8-18位的大小写字母与数字组合',
 					show: false,
-				}
+				},
+				telephoneNumber: 0,
+				password:0
 			}
 		},
 		methods: {
@@ -71,41 +72,55 @@
 			navBack(){
 				uni.navigateBack();
 			},
-			checkMobile(){
-				// console.log(e.detail.value);
-				let mobile = this.$refs.telephone.inputValue;
+			checkMobile(e){
+				let mobile;
+				// #ifdef MP
+				mobile = e.mp.detail.value;
+				// #endif
+				// #ifndef MP
+				// mobile = this.$refs.telephone.inputValue;
+				mobile = e.detail.value;
+				// #endif
+				this.telephoneNumber = mobile;
+				
 				// let exp = /^1[3456789]\d{9}$/; // 正确的手机号码格式 做测试暂不使用
 				let exp = /\w/;
 				this.phoneTips.show = (!RegExp(exp).test(mobile))?true:false;
-				return RegExp(exp).test(mobile);
 			},
-			checkPassword(){
-				let password = this.$refs.password.inputValue;
+			checkPassword(e){
+				let password;
+				// #ifdef MP
+				 password= e.mp.detail.value;
+				// #endif
+				// #ifndef MP
+				 // password= this.$refs.password.inputValue;
+				 password = e.detail.value;
+				// #endif
+				this.password = password;
+				
 				// let exp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/; // 8-18位的大小写字母与数字组合
 				let exp = /\w/;
 				this.passwordTips.show = (!RegExp(exp).test(password))?true:false;
-				return RegExp(exp).test(password);
 			},
 			async submitLogin(){ 
-				if(!this.checkMobile()|| !this.checkPassword()){
+				if(this.passwordTips.show|| this.phoneTips.show){ //如果有其中一个警告文本出现，则未通过验证
 					uni.showToast({
 						title:'信息填写错误，请确认后重新输入',
 						icon:'none'
 					})
 				}else{
 					let _self = this;
-					let phone = this.$refs.telephone.inputValue;
-					let password = this.$refs.password.inputValue;
-					console.log("phone",phone)
-					console.log("password",password)
+					let phone;
+					let password
+					
+					phone = this.telephoneNumber;
+					password = this.password;
 					 //uni-app 对部分 API 进行了 Promise 封装，返回数据的第一个参数是错误对象，第二个参数是返回数据。
 					 // var [error, res] = await uni.request({
 					 //        url: 'https://www.example.com/request'
 					 //    });
 					 
 					 let res = await this.login({ phone, password})
-					  console.log("请求后台获取数据成功",res);
-					  // console.log(this.$store.state.userInfo)
 					 	 uni.showToast({
 					 	 	title: res.data.message,
 					 	 	icon: res.data.code == 2000?'success':'none'
@@ -113,30 +128,6 @@
 					 	 setTimeout( () =>{
 					 	 	uni.navigateBack();
 					 	 },2000)
-						 
-					 
-					 
-					// let [err,res] = await this.$api.request({
-					// 	url: `${baseUrl}/user/login`,
-					// 	method: 'POST',
-					// 	data: {
-					// 		phone,
-					// 		password
-					// 	}
-					// }) 
-					// console.log(res)
-					// console.log("请求后台获取数据成功",res)
-					// _self.login(res.data.data); // 存本地 
-					// console.log("this.store.userInfo",_self.$store.state.userInfo.avatar)
-					// console.log("this.store.userInfo.nickname",_self.$store.state.userInfo.nickname)
-					// console.log(typeof _self.$store.state.userInfo)
-					// uni.showToast({
-					// 	title: res.data.message,
-					// 	icon: res.data.code == 2000?'success':'none'
-					// })
-					// setTimeout( () =>{
-						// uni.navigateBack();
-					// },2000)
 				}
 			}
 		}
